@@ -17,9 +17,9 @@ const {isAuthorised,setIsAusthorised} = useContext(tokenAuthContext)
     <Route  path='/' element={<Home/>} />
     <Route  path='/register' element={<Auth insideRegister/>} />
     <Route  path='/login' element={<Auth/>} />
-    <Route  path='/about' element={<About/>} />
+    <Route  path='/about' element={isAuthorised?<About/>:<Home/>} />
     <Route  path='/alljobs' element={isAuthorised?<AllJobs/>:<Home/>} />
-    <Route  path='/contact' element={<Contact/>} />
+    <Route  path='/contact' element={isAuthorised?<Contact/>:<Home/>} />
     <Route  path='/profile'  element={isAuthorised?<Profile/>:<Home/>}/>
     <Route  path='/*' element={<Navigate to={'/'}/>} />
      </Routes>

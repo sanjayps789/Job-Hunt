@@ -42,3 +42,9 @@ export const deleteJobAPI = async(jobId,reqHeader)=>{
 export const UpdateProfileAPI = async(reqBody,reqHeader)=>{
   return await commonAPI("PUT",`${SERVER_URL}/edit-profile`,reqBody,reqHeader)
 }
+
+
+// send-email api
+export const sendEmailAPI = async(reqBody) =>{
+  return await commonAPI("POST",`${SERVER_URL}/send-email`,reqBody,"")
+}
