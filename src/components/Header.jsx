@@ -1,10 +1,26 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { tokenAuthContext } from '../Context/TokenAuthContextShare'
+ 
+function Header() {
+  const {isAuthorised,setIsAuthorised} = useContext(tokenAuthContext)
+  const navigate = useNavigate()
+const [loginSuccesss,setLoginSuccess] = useState(false)
+useEffect(()=>{
+  if(sessionStorage.getItem("token")){
+    setLoginSuccess(true)
+  }else{
+setLoginSuccess(false)
+  }
+},[])
 
-function Header({insideAllJobs}) {
+const handleLogout = () =>{
+  sessionStorage.clear()
+  setIsAuthorised(false)
+navigate("/")
+}
   return (
-  
     <div className='w-100 py-4'>
       <Navbar expand="lg" className="bg-body-white">
         <Container>
@@ -16,16 +32,24 @@ function Header({insideAllJobs}) {
             </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
+            {loginSuccesss?
+              <Nav className="ms-auto ">
+              <Nav.Link ><Link to={'/'} className='mx-3 text-black fs-6 c' style={{textDecoration:'none'}}>Home</Link></Nav.Link>
+              <Nav.Link ><Link to={'/about'} className='text-black fs-6 c mx-3'style={{textDecoration:'none'}} >About Us</Link></Nav.Link>
+              <Nav.Link ><Link to={'/alljobs'} className='text-black fs-6 c mx-3' style={{textDecoration:'none'}}>Jobs</Link></Nav.Link>
+              <Nav.Link ><Link to={'/contact'} className='text-black fs-6 c mx-3' style={{textDecoration:'none'}}>Contact</Link></Nav.Link>
+             {/* <Nav.Link href='/login' className='text-black fs-6 c mx-3'>Login</Nav.Link>
+            <Link to={'/register'} className="btn btn-success fs-6 mx-3">Sign up</Link> */}
+            <button onClick={handleLogout} className="btn btn-success fs-6 mx-3">Logout</button>
+            </Nav>:
             <Nav className="ms-auto ">
-              <Nav.Link href='/ ' className='mx-3 text-black fs-6 c' >Home</Nav.Link>
-              <Nav.Link href='/about' className='text-black fs-6 c mx-3' >About Us</Nav.Link>
-              <Nav.Link href='/alljobs' className='text-black fs-6 c mx-3' >Jobs</Nav.Link>
-              <Nav.Link href="/contact" className='text-black fs-6 c mx-3'>Contact</Nav.Link>
-             <Nav.Link href='/login' className='text-black fs-6 c mx-3'>Login</Nav.Link>
-            <Link to={'/register'} className="btn btn-success fs-6 mx-3">Sign up</Link>
-            
-         
-            </Nav>
+            <Nav.Link ><Link to={'/'} className='mx-3 text-black fs-6 c' style={{textDecoration:'none'}}>Home</Link></Nav.Link>
+            <Nav.Link ><Link to={'/about'} className='text-black fs-6 c mx-3'style={{textDecoration:'none'}} >About Us</Link></Nav.Link>
+            <Nav.Link ><Link to={'/login'} className='text-black fs-6 c mx-3'style={{textDecoration:'none'}} >Login</Link></Nav.Link>
+           {/* <Nav.Link href='/login' className='text-black fs-6 c mx-3'>Login</Nav.Link> */}
+          <Link to={'/register'} className="btn btn-success fs-6 mx-3">Sign up</Link>
+          </Nav>
+            }
           </Navbar.Collapse>
         </Container>
 
