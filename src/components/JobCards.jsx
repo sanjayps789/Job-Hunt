@@ -51,7 +51,7 @@ function JobCards({job}) {
           </Button>
          <Link to={'/contact'}>
             <Button variant="primary" onClick={handleClose}>
-             send cv
+             Apply
             </Button>
          </Link>
         </Modal.Footer>
