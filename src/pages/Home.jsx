@@ -20,7 +20,7 @@ setLoginSuccess(true)
       navigate("/alljobs")
     }
     else{
-      navigate("/login")
+      navigate("/register")
     }
   }
   return (

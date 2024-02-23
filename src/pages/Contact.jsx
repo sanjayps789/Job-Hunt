@@ -26,8 +26,6 @@ toast.info("please fill the form completely!!!")
           setEmailData({to:"",subject:"",text:""})
          setTimeout(()=>{
           navigate("/alljobs")
-
-          
          },3000)
         }
         else{
