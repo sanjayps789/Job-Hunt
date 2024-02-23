@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
 import AuthImage from '../assets/AuthImage.svg'
 import { Button, Modal } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SERVER_URL from '../services/serverUrl';
 
 function JobCards({job}) {
+  const navigate = useNavigate()
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleNav = () =>{
+    navigate("/contact")
+  }
   return (
     <div>
         <div size="lg" className="card shadow border my-2 p-4" onClick={handleShow} >
@@ -50,7 +54,7 @@ function JobCards({job}) {
             Close
           </Button>
          <Link to={'/contact'}>
-            <Button variant="primary" onClick={handleClose}>
+            <Button variant="primary" onClick={handleNav}>
              Apply
             </Button>
          </Link>
