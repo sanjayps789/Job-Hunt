@@ -68,6 +68,7 @@ const handleProfileUpdate = async(e)=>{
           sessionStorage.setItem("userDetails",JSON.stringify(result.data))
           // setUserData(result.data)
           setUpdateProfileResponse(result.data.profile)
+          
         }else{
           console.log(result.data);
         }
