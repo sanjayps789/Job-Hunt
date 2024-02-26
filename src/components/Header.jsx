@@ -18,6 +18,7 @@ setLoginSuccess(false)
 const handleLogout = () =>{
   sessionStorage.clear()
   setIsAuthorised(false)
+  setLoginSuccess(false)
 navigate("/")
 }
   return (

@@ -36,6 +36,9 @@ function Auth({ insideRegister }) {
           }, 2000)
         } else {
           toast.error(result.response.data)
+          setTimeout(() => {
+            navigate("/login")
+          }, 2000) 
         }
       } catch (err) {
         console.log(err);

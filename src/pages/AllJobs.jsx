@@ -6,12 +6,15 @@ import Header from '../components/Header'
 import dummyProfile from '../assets/dummyProfile.jpeg'
 import { Link } from 'react-router-dom'
 import { getAllJobsAPI } from '../services/allAPI'
-import { addResponseContext } from '../Context/ContextShare'
+import { addResponseContext, updateProfileContext } from '../Context/ContextShare'
+import SERVER_URL from '../services/serverUrl'
 
 
 function AllJobs() {
+   const [preview,setPreview] = useState("")
    const [searchKey,setSearchKey] = useState("")
    const {addResponse,setAddResponse} = useContext(addResponseContext)
+  const {updateProfileResponse,setUpdateProfileResponse} =  useContext(updateProfileContext)
 const [allJobs,setAllJobs] = useState([])
 console.log(allJobs);
    const getAllJobs = async() =>{
@@ -34,8 +37,15 @@ console.log(allJobs);
    console.log(allJobs);
 
    useEffect(()=>{
+      if(sessionStorage.getItem("userDetails")){
+         const userDetails = JSON.parse(sessionStorage.getItem("userDetails"))
+         console.log(userDetails.profile);
+         setPreview(userDetails.profile)
+      }else{
+         setPreview(dummyProfile)
+      }
       getAllJobs()
-   },[searchKey,addResponse])
+   },[searchKey,addResponse,updateProfileResponse])
   return (
    <>
    <Header/>
@@ -53,7 +63,7 @@ console.log(allJobs);
                      <div className='d-flex align-items-center justify-content-between'>
                         <Add/>
                         {/* component to update or add a profile*/}
-                       <Link to={'/profile'}> <img style={{height:'60px'}} src={dummyProfile} alt="profile picture" /></Link>
+                       <Link to={'/profile'}> <img style={{height:'60px'}} src={preview?`${SERVER_URL}/uploads/${preview}`:dummyProfile} alt="profile picture" /></Link>
                      </div>
                   </div>
                   <Form>

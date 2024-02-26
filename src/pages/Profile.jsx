@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import dummyProfile from '../assets/dummyProfile.jpeg'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,7 +6,9 @@ import { Form } from 'react-bootstrap'
 import MyActivity from '../components/MyActivity'
 import SERVER_URL from '../services/serverUrl'
 import { UpdateProfileAPI } from '../services/allAPI';
+import { updateProfileContext } from '../Context/ContextShare';
 function Profile() {
+  const {updateProfileResponse,setUpdateProfileResponse} = useContext(updateProfileContext)
 const [userData,setUserData] = useState({
 username:"",email:"",password:"",profileImage:"",github:"",linkedin:"",about:"",headline:"",education:""
 })
@@ -65,6 +67,7 @@ const handleProfileUpdate = async(e)=>{
         if(result.status ===200){
           sessionStorage.setItem("userDetails",JSON.stringify(result.data))
           // setUserData(result.data)
+          setUpdateProfileResponse(result.data.profile)
         }else{
           console.log(result.data);
         }
@@ -77,7 +80,7 @@ const handleProfileUpdate = async(e)=>{
 }
   return (
     <div className='w-100 p-5' style={{height:'100vh'}}>
-      <div className="container">
+      <div className="container"> 
         <h1 className='text-success'>Profile</h1>
         <div className="row align-items-center">
           <div className="col-lg-5 col-md-5 col-sm-5 border p-3 mb-3 ">
@@ -132,8 +135,8 @@ const handleProfileUpdate = async(e)=>{
                 <Form.Label>Education</Form.Label>
                 <Form.Control value={userData.education} onChange={e=>setUserData({...userData,education:e.target.value})} type="text"  />
               </div>
-              <div className="text-center">
-                <button onClick={handleProfileUpdate} className="btn btn-primary mx-3">Edit Profile</button>  
+            <div className="text-center">
+                <button onClick={handleProfileUpdate}  className="btn btn-primary mx-3">Edit Profile</button>  
               </div>
                 </div>
             </Form>
@@ -152,7 +155,7 @@ const handleProfileUpdate = async(e)=>{
  </div>
 </div>
 
-<ToastContainer  autoClose={3000} />
+<ToastContainer  autoClose={2000} />
 
     </div>
   )
