@@ -11,6 +11,7 @@ import SERVER_URL from '../services/serverUrl'
 
 
 function AllJobs() {
+   const [userName,setUserName] = useState("")
    const [preview,setPreview] = useState("")
    const [searchKey,setSearchKey] = useState("")
    const {addResponse,setAddResponse} = useContext(addResponseContext)
@@ -39,10 +40,11 @@ console.log(allJobs);
    useEffect(()=>{
       if(sessionStorage.getItem("userDetails")){
          const userDetails = JSON.parse(sessionStorage.getItem("userDetails"))
-         console.log(userDetails.profile);
+         // console.log(userDetails.profile);
          setPreview(userDetails.profile)
+         setUserName(userDetails.username)
       }else{
-         setPreview(dummyProfile)
+         setPreview("")
       }
       getAllJobs()
    },[searchKey,addResponse,updateProfileResponse])
@@ -63,13 +65,16 @@ console.log(allJobs);
                      <div className='d-flex align-items-center justify-content-between'>
                         <Add/>
                         {/* component to update or add a profile*/}
-                       <Link to={'/profile'}> <img style={{height:'60px'}} src={preview?`${SERVER_URL}/uploads/${preview}`:dummyProfile} alt="profile picture" /></Link>
+                       <Link style={{textDecoration:'none'}} to={'/profile'}> 
+                       <img style={{height:'60px'}} src={preview?`${SERVER_URL}/uploads/${preview}`:dummyProfile} alt="profile picture" />
+                       <p>{userName}</p>
+                       </Link>
                      </div>
                   </div>
                   <Form>
                      <div className='d-flex mb-3'> 
                      <Form.Control type="text"  onChange={e=>setSearchKey(e.target.value)} className='w-75 border border-black' placeholder="Search jobs titles"/>
-                     <button type='button' className='btn btn-primary mx-3'>Search</button>
+                     {/* <button type='button' className='btn btn-primary mx-3'>Search</button> */}
                      </div>
                       </Form>
   
@@ -79,7 +84,7 @@ console.log(allJobs);
                         <div key={index} className='col-lg-12'>
                            <JobCards job={job}/>
                        </div>
-                      )):<div className='text-danger'>Nothing to Display</div>                       }
+                      )):<div className='text-danger'>Nothing to Display</div>}
                       </div>
               </div>
          </div>
