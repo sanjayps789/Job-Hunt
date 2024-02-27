@@ -67,7 +67,7 @@ const handleProfileUpdate = async(e)=>{
         if(result.status ===200){
           sessionStorage.setItem("userDetails",JSON.stringify(result.data))
           // setUserData(result.data)
-          setUpdateProfileResponse(result.data.profile)
+          setUpdateProfileResponse("userDetails")
           
         }else{
           console.log(result.data);
